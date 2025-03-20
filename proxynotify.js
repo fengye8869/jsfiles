@@ -1,12 +1,17 @@
-// node-change.js
-const policyGroupName = "谷歌服务"; // 修改为你的策略组名称
+// node-check.js
+const policyGroup = "谷歌服务";
+let current = $persistentStore.read("currentNode");
 
-$event.subscribe('policyChanged', (group, newPolicy) => {
-  if (group === policyGroupName) {
-    $notification.post(
-      "节点已切换", 
-      `当前节点：${newPolicy}`,
-      `策略组「${group}」已切换到 ${newPolicy}`
-    );
-  }
-});$done()
+if (!current) {
+  current = "INIT";
+  $persistentStore.write("INIT", "currentNode");
+}
+
+const newPolicy = $surge.selectGroupDetails(policyGroup).policy;
+
+if (newPolicy !== current) {
+  $persistentStore.write(newPolicy, "currentNode");
+  $notification.post("节点切换", `新节点：${newPolicy}`);
+}
+
+$done()
