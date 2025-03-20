@@ -1,5 +1,5 @@
 // node-change.js
-const policyGroupName = "PROXY"; // 修改为你的策略组名称
+const policyGroupName = "谷歌服务"; // 修改为你的策略组名称
 
 $event.subscribe('policyChanged', (group, newPolicy) => {
   if (group === policyGroupName) {
